@@ -1,51 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Validação</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <form id="form-inspecao">
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome">
-        
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" name="nome" />
 
-        <label for="setor">Setor</label>
-        <select id="setor">
-            <option value="">Selecione</option>
-            <option value="operacao">Operação</option>
-            <option value="manutencao">Manutenção</option>
-            <option value="seguranca">Segurança</option>
-        </select>
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" />
 
-        <p>Prioridade</p>
-        <label><input type="radio" name="prioridade" value="baixa">Baixa</label>
-        <label><input type="radio" name="prioridade" value="media">Média</label>
-        <label><input type="radio" name="prioridade" value="alta">Alta</label>
+      <label for="setor">Setor</label>
+      <select id="setor">
+        <option value="">Selecione</option>
+        <option value="operacao">Operação</option>
+        <option value="manutencao">Manutenção</option>
+        <option value="seguranca">Segurança</option>
+      </select>
 
-        <label for="descricao">Descrição</label>
-        <textarea id="descricao"></textarea>
-        <label>
-            <input type="checkbox" id="termos"> Confirma as informações a serem enviadas?
-        </label>
+      <p>Prioridade</p>
+      <label><input type="radio" name="prioridade" value="baixa" />Baixa</label>
+      <label><input type="radio" name="prioridade" value="media" />Média</label>
+      <label><input type="radio" name="prioridade" value="alta" />Alta</label>
 
-        <button type="submit">Enviar</button>
-        <p id="mensagem"></p>
+      <label for="descricao"><br />Descrição</label>
+      <textarea id="descricao"></textarea>
+      <label>
+        <input type="checkbox" id="termos" /> Confirma as informações a serem
+        enviadas?
+      </label>
+
+      <button type="submit">Enviar</button>
+      <p id="mensagem"></p>
     </form>
 
     <script>
-        const form = document.getElementById('form-inspecap');
-        const mensagem = document.getElementById('mensagem');
+      const form = document.getElementById("form-inspecao");
+      const mensagem = document.getElementById("mensagem");
 
-        form.addEventListener('submit', function(event){
-            event.preventDefault();
-            
-        });
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
 
+        const nome = document.getElementById("nome").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const setor = document.getElementById("setor").value;
+        const descricao = document.getElementById("descricao").value.trim();
+        const termos = document.getElementById("termos").checked;
+        const prioridade = document.querySelector(
+          'input[name="prioridade"]:checked'
+        );
+
+        if (nome.length > 5) {
+          console.log("Nome válido.");
+        }
+
+        if (nome === "") {
+          mensagem.textContent = "Prencha o nome.";
+          return;
+        }
+
+        if (email === "") {
+          mensagem.textContent = "Preencha o e-mail.";
+          return;
+        }
+
+        if (setor === "") {
+          mensagem.textContent = "Selecione um setor";
+          return;
+        }
+
+        if (!prioridade) {
+          mensagem.textContent = "Selecione uma prioridade.";
+          return;
+        }
+
+        if (descricao.length < 10) {
+          mensagem.textContent =
+            "A descrição deve ter pelo menos 10 caracteres.";
+          return;
+        }
+
+        if (!termos) {
+          mensagem.textContent = "Marque a confirmação dos dados.";
+          return;
+        }
+
+        mensagem.textContent = "Formulário validado com sucesso.";
+      });
     </script>
-</body>
+  </body>
 </html>
